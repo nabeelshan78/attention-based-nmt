@@ -109,6 +109,38 @@ This architecture provides a robust foundation for Neural Machine Translation, d
 
 ---
 
+### 📊 Architectural Flow (Training Phase)
+
+```mermaid
+flowchart TD
+    subgraph Encoder["Encoder"]
+        A["Input Sequence - English"] --> B["Encoder Embedding Layer"]
+        B --> C["Bidirectional LSTM - encoder_bilstm"]
+        C --> D["Encoder Outputs Projection - Dense, tanh"]
+        C --> E["Final Hidden States (fwd & bwd)"]
+        C --> F["Final Cell States (fwd & bwd)"]
+        E --> G["state_h (Concat)"]
+        F --> H["state_c (Concat)"]
+    end
+
+    subgraph Decoder["Decoder (Training with Teacher Forcing)"]
+        I["Target Sequence Input - French (shifted)"] --> J["Decoder Embedding Layer"]
+        J --> K["Decoder Embedding Output"]
+        K --> L["Query → Attention"]
+        D --> L["Keys/Values → Attention"]
+        L --> M["Context Vector"]
+        K --> N["Concatenate Layer"]
+        M --> N
+        N --> O["Unidirectional LSTM - decoder_lstm"]
+        G --> O
+        H --> O
+        O --> P["Decoder LSTM Outputs"]
+        P --> Q["Output Dense Layer - Softmax"]
+        Q --> R["Predicted Token Probabilities - French Vocabulary"]
+    end
+
+```
+
 
 
 ## Layer Summary
