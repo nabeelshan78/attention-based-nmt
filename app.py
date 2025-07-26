@@ -5,6 +5,7 @@ from tensorflow.keras.models import Model
 import numpy as np
 import json
 import os # For checking file existence
+import time
 # For downloading large files from Hugging Face Hub (if applicable for deployment)
 # from huggingface_hub import hf_hub_download 
 
@@ -260,7 +261,11 @@ def get_nmt_models(Tx, Ty, input_vocab_size, target_vocab_size, embedding_dim, l
     if os.path.exists(model_weights_path):
         try:
             training_model.load_weights(model_weights_path)
-            st.success("Model loaded successfully.")
+            # st.success("Model loaded successfully.")
+            success_msg = st.empty()
+            success_msg.success("Model loaded successfully.")
+            time.sleep(3)  # Show the success message for 3 seconds
+            success_msg.empty()
         except Exception as e:
             st.error(f"Error loading weights: {e}")
             st.warning("The application will continue with randomly initialized weights.")
