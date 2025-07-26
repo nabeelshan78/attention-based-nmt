@@ -14,7 +14,7 @@ st.set_page_config(layout="wide", page_title="NMT with Attention", initial_sideb
 
 # Custom CSS for light theme and general aesthetics
 st.markdown(
-    """
+"""
     <style>
     /* General body and app background */
     body {
@@ -152,9 +152,7 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True
-)
-
-# --- Model Definition and Loading ---
+)# --- Model Definition and Loading ---
 
 # Load the vocabulary files
 @st.cache_data # Cache vocabulary loading
@@ -261,7 +259,6 @@ def get_nmt_models(Tx, Ty, input_vocab_size, target_vocab_size, embedding_dim, l
     if os.path.exists(model_weights_path):
         try:
             training_model.load_weights(model_weights_path)
-            # st.success("Model loaded successfully.")
             success_msg = st.empty()
             success_msg.success("Model loaded successfully.")
             time.sleep(3)  # Show the success message for 3 seconds
@@ -379,14 +376,13 @@ st.title("🧠 Neural Machine Translation (NMT) with Attention")
 
 st.markdown("""
 <div style='text-align: center; font-size: 1.1em; margin-bottom: 30px;'>
-    Welcome to this interactive demonstration of a cutting-edge Sequence-to-Sequence Neural Machine Translation model, powered by an **attention mechanism**!
+    Welcome to this interactive demonstration of a cutting-edge Sequence-to-Sequence Neural Machine Translation model, powered by an <strong>attention mechanism</strong>!
     This application allows you to translate English sentences to French, showcasing the power of deep learning in language processing.
 </div>
 """, unsafe_allow_html=True)
 
-
-# --- Model Explanation Section (Collapsible) ---
-with st.expander("✨ Understand How It Works", expanded=True):
+# --- Model Explanation Section (Collapsible - Starts CLOSED) ---
+with st.expander("✨ Understand How It Works", expanded=False): # Changed to expanded=False
     st.subheader("How Our Translation Brain Works:")
     st.markdown(
         """
@@ -402,6 +398,15 @@ with st.expander("✨ Understand How It Works", expanded=True):
         """
     )
     st.markdown("---") # Added a subtle separator within the expander
+
+# --- Architecture Diagram Section (Collapsible - Starts CLOSED) ---
+with st.expander("🏗️ View Model Architecture Diagram", expanded=False): # Changed to expanded=False
+    st.subheader("Model Architecture Overview")
+    st.image("image/architecture.png", caption="Attention-Based Encoder-Decoder NMT Architecture")
+    st.markdown("""
+    This diagram illustrates the flow of data through our custom-built Neural Machine Translation model, highlighting the **Bidirectional LSTM Encoder**, the **Additive Attention Mechanism**, and the **LSTM Decoder**.
+    """)
+    st.markdown("---")
 
 
 # Sample sentences
@@ -508,6 +513,6 @@ st.markdown("---")
 
 st.markdown("""
 <div style='text-align: center; margin-top: 30px; font-size: 0.9em; color: #666;'>
-    **Developed by an aspiring AI/ML Engineer with a passion for cutting-edge research, aiming for impactful publications and a career at a leading tech company.**
+    <strong>Developed by an AI/ML Engineer driven by a passion for deep learning, real-world innovation, and impactful research.</strong>
 </div>
 """, unsafe_allow_html=True)
