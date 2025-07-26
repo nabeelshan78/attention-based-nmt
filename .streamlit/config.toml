@@ -1,5 +1,3 @@
 # .streamlit/config.toml
 [runner]
-# Specify a Python version known to be compatible with TensorFlow 2.x
-# Python 3.10 is a good, stable choice for many TensorFlow versions.
 python_version = "3.10"
