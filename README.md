@@ -13,15 +13,15 @@ This project delivers a real-time Neural Machine Translation (NMT) web applicati
 2. [🧠 Model Architecture](#-model-architecture)  
 3. [Key Features & Highlights](#key-features--highlights)  
 4. [Architecture Component Breakdown](#architecture-component-breakdown)  
-   - [Encoder](#1.-encoder)  
-   - [Decoder](#2.-decoder)  
+   - [Encoder](#encoder)  
+   - [Decoder](#decoder)  
 5. [Inference Flow](#inference-flow)  
 6. [Architectural Flow (Training Phase)](#-architectural-flow-training-phase)  
 7. [Layer Summary](#layer-summary)  
 8. [Core Layers & Their Roles](#core-layers--their-roles)  
 9. [Training Progress & Results](#training-progress--results)  
 10. [Sample Predictions vs Ground Truth](#sample-predictions-vs-ground-truth)  
-11. [Skills Demonstrated](#skills-demonstrated)  
+11. [Skills Demonstrated](#-skills-demonstrated)  
 12. [Project Structure](#-project-structure)  
 13. [Getting Started](#️-getting-started)  
 14. [Future Enhancements](#-future-enhancements)  
@@ -86,7 +86,7 @@ The Neural Machine Translation (NMT) system in this project is built upon a robu
 
 
 ## Architecture Component Breakdown
-### 1. Encoder  
+### Encoder  
 **Input Layer (`encoder_inputs`)**: Takes the numerical representation of the English source sentence.  
 
 **Encoder Embedding Layer (`encoder_embedding_layer`)**: Converts input token IDs into dense vector representations.  
@@ -100,7 +100,7 @@ It also outputs the final hidden and cell states from both forward and backward 
 **Encoder Outputs Projection (`encoder_outputs_projection_layer`)**: A Dense layer with tanh activation that projects the Encoder Outputs to a suitable dimension (matching `lstm_units`) for the attention mechanism. These projected outputs serve as the "Keys" and "Values" for attention.  
 
 
-### 2. Decoder  
+### Decoder  
 **Target Sequence Input (`decoder_inputs`)**: During training, this layer receives the actual target (French) sentence, shifted right (e.g., `<SOS>` token followed by French words). This is for "Teacher Forcing."  
 
 **Decoder Embedding Layer (`decoder_embedding_layer`)**: Embeds the target token IDs into dense vectors.  
@@ -371,10 +371,6 @@ Potential next steps to improve this project:
 
 - **Model Compression**  
   Explore **quantization**, **pruning**, or **knowledge distillation** for efficient deployment.
-
-- **🌐 Interactive Web Demo**  
-  Build a live demo interface using **Streamlit**, **Gradio**, or similar tools for real-time translation testing.
-
 
 ---
 
