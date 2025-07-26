@@ -1,10 +1,33 @@
-# 🌐 Neural Machine Translation (NMT) Project
+# 🌐 Real-Time Neural Machine Translation (NMT): An Attention-Based System Built From Scratch
 
 # English to French Translator
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://attention-based-nmt-4u88ekoanz7pgwfkp4carq.streamlit.app/)
 
-A real-time Neural Machine Translation (NMT) web app built using an attention-based encoder-decoder model. Built with Streamlit and TensorFlow.
+This project delivers a real-time Neural Machine Translation (NMT) web application, powered by a custom-built, attention-based encoder-decoder model. Unlike solutions that rely on pre-trained components, our NMT system was designed, implemented, and trained entirely from scratch using TensorFlow on English-French sentence pairs. This end-to-end development showcases a deep, fundamental understanding of NMT principles, from architecture design to training, all deployed seamlessly as a web application with Streamlit.
+
+
+## 📚 Table of Contents
+
+1. [Project Overview](#-project-overview)  
+2. [🧠 Model Architecture](#-model-architecture)  
+3. [Key Features & Highlights](#-key-features--highlights)  
+4. [Architecture Component Breakdown](#-architecture-component-breakdown)  
+   - [Encoder](#1️⃣-encoder)  
+   - [Decoder](#2️⃣-decoder)  
+5. [Inference Flow](#-inference-flow)  
+6. [Architectural Flow (Training Phase)](#-architectural-flow-training-phase)  
+7. [Layer Summary](#-layer-summary)  
+8. [Core Layers & Their Roles](#-core-layers--their-roles)  
+9. [Training Progress & Results](#-training-progress--results)  
+10. [Sample Predictions vs Ground Truth](#-sample-predictions-vs-ground-truth)  
+11. [Skills Demonstrated](#-skills-demonstrated)  
+12. [Project Structure](#-project-structure)  
+13. [Getting Started](#️-getting-started)  
+14. [Future Enhancements](#-future-enhancements)  
+15. [Author](#-author)  
+16. [Star the Repo](#-star-the-repo)  
+
 
 | **Original English**               | **Model French Translation**                     | **Back-Translated English**              | **Match Quality**            |
 |-----------------------------------|--------------------------------------------------|------------------------------------------|-------------------------------|
