@@ -1,5 +1,11 @@
 # 🌐 Neural Machine Translation (NMT) Project
 
+# English to French Translator
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://attention-based-nmt-4u88ekoanz7pgwfkp4carq.streamlit.app/)
+
+A real-time Neural Machine Translation (NMT) web app built using an attention-based encoder-decoder model. Built with Streamlit and TensorFlow.
+
 | **Original English**               | **Model French Translation**                     | **Back-Translated English**              | **Match Quality**            |
 |-----------------------------------|--------------------------------------------------|------------------------------------------|-------------------------------|
 | How are you?                      | comment vas-tu ?                                 | how are you ?                             | ✅ Exact                      |
