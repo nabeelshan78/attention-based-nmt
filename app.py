@@ -298,7 +298,7 @@ def sentences_to_indices(tokenized_sentences, vocab):
 
 # The predict_translation function is crucial and needs to be cached for performance.
 @st.cache_data(show_spinner=False) # show_spinner=False because we'll add our own spinner
-def predict_translation_cached(input_sentence, encoder_inference_model, decoder_inference_model,
+def predict_translation_cached(input_sentence, _encoder_inference_model, _decoder_inference_model,
                                input_vocab, input_inv_vocab, target_vocab, target_inv_vocab,
                                Tx, Ty, beam_width=3, max_decoder_steps=None):
     """
@@ -316,7 +316,7 @@ def predict_translation_cached(input_sentence, encoder_inference_model, decoder_
     )
     padded_input = np.array(padded_input) 
 
-    encoder_outputs, h, c = encoder_inference_model.predict(padded_input, verbose=0)
+    encoder_outputs, h, c = _encoder_inference_model.predict(padded_input, verbose=0)
 
     beams = [([target_vocab["<sos>"]], h, c, 0.0)]
     final_translations = [] 
@@ -331,7 +331,7 @@ def predict_translation_cached(input_sentence, encoder_inference_model, decoder_
             last_token = seq[-1]
             decoder_single_input = np.array([[last_token]]) 
 
-            decoder_outputs_probs, new_h, new_c = decoder_inference_model.predict(
+            decoder_outputs_probs, new_h, new_c = _decoder_inference_model.predict(
                 [decoder_single_input, encoder_outputs, h_state, c_state], verbose=0
             )
 
