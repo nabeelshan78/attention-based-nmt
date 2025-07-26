@@ -8,6 +8,158 @@ import os # For checking file existence
 # For downloading large files from Hugging Face Hub (if applicable for deployment)
 # from huggingface_hub import hf_hub_download 
 
+
+
+# --- Streamlit UI ---
+
+# Set wide mode and light theme
+st.set_page_config(layout="wide", page_title="NMT with Attention", initial_sidebar_state="expanded")
+
+# Custom CSS for light theme and general aesthetics
+st.markdown(
+    """
+    <style>
+    /* General body and app background */
+    body {
+        color: #333; /* Dark text for light background */
+        background-color: #f0f2f6; /* Light grey background */
+    }
+    .stApp {
+        background-color: #f0f2f6;
+    }
+    /* Card-like containers for sections */
+    /* Removed .stButton from here as it caused issues with padding for the button itself */
+    .stExpander, .stTextInput, .stTextArea, .stSelectbox, .stRadio, .stSlider { 
+        background-color: #ffffff; /* White background for UI elements */
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+        margin-bottom: 20px; /* Space between sections */
+        border: 1px solid #e0e0e0; /* Light border */
+    }
+    /* Input fields */
+    .stTextInput>div>div>input, .stTextArea>div>div>textarea {
+        background-color: #f8f8f8; /* Slightly off-white for input fields */
+        color: #333;
+        border-radius: 8px;
+        border: 1px solid #d0d0d0;
+        padding: 10px;
+    }
+    /* Selectbox dropdown arrow */
+    .stSelectbox>div>div>div>div:last-child {
+        background-color: #f8f8f8;
+        border-radius: 0 8px 8px 0;
+    }
+    /* Buttons */
+    .stButton>button {
+        background-color: #4CAF50; /* Green button */
+        color: white;
+        border-radius: 8px;
+        border: none;
+        padding: 12px 24px; /* Slightly larger padding */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px; /* Slightly larger font */
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: all 0.3s ease; /* Smooth transition for hover */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+        width: 100%; /* Make button span full width of its container */
+    }
+    .stButton>button:hover {
+        background-color: #45a049; /* Darker green on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+    }
+    /* Headings */
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #1a1a1a; /* Darker headings */
+        font-weight: 600; /* Slightly bolder */
+    }
+    /* Alerts */
+    .stAlert {
+        border-radius: 8px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 15px;
+        font-size: 15px;
+    }
+    .stAlert.st-success {
+        background-color: #e6ffe6; /* Light green for success */
+        color: #1f7a1f;
+        border: 1px solid #a3e6a3;
+    }
+    .stAlert.st-error {
+        background-color: #ffe6e6; /* Light red for error */
+        color: #cc0000;
+        border: 1px solid #ffb3b3;
+    }
+    .stAlert.st-warning {
+        background-color: #fff8e6; /* Light yellow for warning */
+        color: #e69100;
+        border: 1px solid #ffd9b3;
+    }
+    .stAlert.st-info {
+        background-color: #e6f7ff; /* Light blue for info */
+        color: #007acc;
+        border: 1px solid #b3e0ff;
+    }
+
+    /* Overall page padding */
+    .reportview-container .main .block-container {
+        padding-top: 3rem; /* More top padding */
+        padding-right: 4rem; /* More horizontal padding */
+        padding-left: 4rem;
+        padding-bottom: 3rem;
+    }
+
+    /* Styling for the radio buttons (input method selection) */
+    div.stRadio > label {
+        background-color: #f8f8f8; /* Light background for radio button labels */
+        border: 1px solid #d0d0d0;
+        border-radius: 8px;
+        padding: 10px 15px;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    div.stRadio > label:hover {
+        background-color: #e8e8e8; /* Slightly darker on hover */
+        border-color: #b0b0b0;
+    }
+    div.stRadio > label > div[data-baseweb="radio"] { /* Specific styling for the radio circle itself */
+        border-color: #4CAF50 !important; /* Green border */
+    }
+    div.stRadio > label > div[data-baseweb="radio"] > div { /* Fill color when selected */
+        background-color: #4CAF50 !important;
+    }
+
+    /* Specific styling for the output container */
+    .output-container {
+        background-color: #f8f8f8; /* Light grey background for output */
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e0e0e0;
+        margin-top: 30px; /* Space above output */
+        margin-bottom: 20px;
+    }
+    .output-container h4 {
+        color: #1a1a1a;
+        margin-bottom: 10px;
+    }
+    .output-container p {
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
 # --- Model Definition and Loading (as provided by you) ---
 
 # Load the vocabulary files
@@ -224,155 +376,6 @@ def predict_translation_cached(input_sentence, encoder_inference_model, decoder_
         translated_words.append(target_inv_vocab.get(idx, '<unk>')) 
 
     return " ".join(translated_words)
-
-
-# --- Streamlit UI ---
-
-# Set wide mode and light theme
-st.set_page_config(layout="wide", page_title="NMT with Attention", initial_sidebar_state="expanded")
-
-# Custom CSS for light theme and general aesthetics
-st.markdown(
-    """
-    <style>
-    /* General body and app background */
-    body {
-        color: #333; /* Dark text for light background */
-        background-color: #f0f2f6; /* Light grey background */
-    }
-    .stApp {
-        background-color: #f0f2f6;
-    }
-    /* Card-like containers for sections */
-    /* Removed .stButton from here as it caused issues with padding for the button itself */
-    .stExpander, .stTextInput, .stTextArea, .stSelectbox, .stRadio, .stSlider { 
-        background-color: #ffffff; /* White background for UI elements */
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
-        margin-bottom: 20px; /* Space between sections */
-        border: 1px solid #e0e0e0; /* Light border */
-    }
-    /* Input fields */
-    .stTextInput>div>div>input, .stTextArea>div>div>textarea {
-        background-color: #f8f8f8; /* Slightly off-white for input fields */
-        color: #333;
-        border-radius: 8px;
-        border: 1px solid #d0d0d0;
-        padding: 10px;
-    }
-    /* Selectbox dropdown arrow */
-    .stSelectbox>div>div>div>div:last-child {
-        background-color: #f8f8f8;
-        border-radius: 0 8px 8px 0;
-    }
-    /* Buttons */
-    .stButton>button {
-        background-color: #4CAF50; /* Green button */
-        color: white;
-        border-radius: 8px;
-        border: none;
-        padding: 12px 24px; /* Slightly larger padding */
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 17px; /* Slightly larger font */
-        margin: 4px 2px;
-        cursor: pointer;
-        transition: all 0.3s ease; /* Smooth transition for hover */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
-        width: 100%; /* Make button span full width of its container */
-    }
-    .stButton>button:hover {
-        background-color: #45a049; /* Darker green on hover */
-        transform: translateY(-2px); /* Slight lift effect */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
-    }
-    /* Headings */
-    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #1a1a1a; /* Darker headings */
-        font-weight: 600; /* Slightly bolder */
-    }
-    /* Alerts */
-    .stAlert {
-        border-radius: 8px;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        padding: 15px;
-        font-size: 15px;
-    }
-    .stAlert.st-success {
-        background-color: #e6ffe6; /* Light green for success */
-        color: #1f7a1f;
-        border: 1px solid #a3e6a3;
-    }
-    .stAlert.st-error {
-        background-color: #ffe6e6; /* Light red for error */
-        color: #cc0000;
-        border: 1px solid #ffb3b3;
-    }
-    .stAlert.st-warning {
-        background-color: #fff8e6; /* Light yellow for warning */
-        color: #e69100;
-        border: 1px solid #ffd9b3;
-    }
-    .stAlert.st-info {
-        background-color: #e6f7ff; /* Light blue for info */
-        color: #007acc;
-        border: 1px solid #b3e0ff;
-    }
-
-    /* Overall page padding */
-    .reportview-container .main .block-container {
-        padding-top: 3rem; /* More top padding */
-        padding-right: 4rem; /* More horizontal padding */
-        padding-left: 4rem;
-        padding-bottom: 3rem;
-    }
-
-    /* Styling for the radio buttons (input method selection) */
-    div.stRadio > label {
-        background-color: #f8f8f8; /* Light background for radio button labels */
-        border: 1px solid #d0d0d0;
-        border-radius: 8px;
-        padding: 10px 15px;
-        margin-right: 10px;
-        cursor: pointer;
-        transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-    div.stRadio > label:hover {
-        background-color: #e8e8e8; /* Slightly darker on hover */
-        border-color: #b0b0b0;
-    }
-    div.stRadio > label > div[data-baseweb="radio"] { /* Specific styling for the radio circle itself */
-        border-color: #4CAF50 !important; /* Green border */
-    }
-    div.stRadio > label > div[data-baseweb="radio"] > div { /* Fill color when selected */
-        background-color: #4CAF50 !important;
-    }
-
-    /* Specific styling for the output container */
-    .output-container {
-        background-color: #f8f8f8; /* Light grey background for output */
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border: 1px solid #e0e0e0;
-        margin-top: 30px; /* Space above output */
-        margin-bottom: 20px;
-    }
-    .output-container h4 {
-        color: #1a1a1a;
-        margin-bottom: 10px;
-    }
-    .output-container p {
-        font-size: 1.1em;
-        line-height: 1.6;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # --- App Title and Introduction ---
 st.title("🧠 Neural Machine Translation (NMT) with Attention")
