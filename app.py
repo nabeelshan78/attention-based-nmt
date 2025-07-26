@@ -372,7 +372,7 @@ def predict_translation_cached(input_sentence, _encoder_inference_model, _decode
     return " ".join(translated_words)
 
 # --- App Title and Introduction ---
-st.title("🧠 Neural Machine Translation (NMT) with Attention")
+st.title("🧠 Attention-Based Neural Machine Translation (NMT)")
 
 st.markdown("""
 <div style='text-align: center; font-size: 1.1em; margin-bottom: 30px;'>
