@@ -8,11 +8,7 @@ import os # For checking file existence
 # For downloading large files from Hugging Face Hub (if applicable for deployment)
 # from huggingface_hub import hf_hub_download 
 
-
-
-# --- Streamlit UI ---
-
-# Set wide mode and light theme
+# --- Streamlit UI Configuration (MUST BE THE FIRST ST. COMMAND IN THE SCRIPT) ---
 st.set_page_config(layout="wide", page_title="NMT with Attention", initial_sidebar_state="expanded")
 
 # Custom CSS for light theme and general aesthetics
@@ -28,7 +24,6 @@ st.markdown(
         background-color: #f0f2f6;
     }
     /* Card-like containers for sections */
-    /* Removed .stButton from here as it caused issues with padding for the button itself */
     .stExpander, .stTextInput, .stTextArea, .stSelectbox, .stRadio, .stSlider { 
         background-color: #ffffff; /* White background for UI elements */
         padding: 20px;
@@ -158,9 +153,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-
-# --- Model Definition and Loading (as provided by you) ---
+# --- Model Definition and Loading ---
 
 # Load the vocabulary files
 @st.cache_data # Cache vocabulary loading
@@ -168,13 +161,12 @@ def load_vocab(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-# Update path to dataset/processed as per your latest code
 eng_vocab_path = 'dataset/processed/eng_vocab.json'
 fra_vocab_path = 'dataset/processed/fra_vocab.json'
 
-# Ensure vocab files exist for the app to run
+# --- Check for vocab files AFTER st.set_page_config ---
 if not os.path.exists(eng_vocab_path) or not os.path.exists(fra_vocab_path):
-    st.error(f"Error: Vocabulary files '{eng_vocab_path}' and/or '{fra_vocab_path}' not found.")
+    st.error(f"Error: Vocabulary files '{eng_vocab_path}' and/or '{fra_vocab_path}' not found. Please ensure they are in the correct location.")
     st.stop() # Stop the Streamlit app if files are missing
 
 eng_vocab = load_vocab(eng_vocab_path)
@@ -283,7 +275,7 @@ model, encoder_inference_model, decoder_inference_model, \
     get_nmt_models(Tx, Ty, input_vocab_size, target_vocab_size, embedding_dim, lstm_units)
 
 
-# --- Utility Functions (as provided by you) ---
+# --- Utility Functions ---
 def tokenize(sentences):
     """
     Tokenizes a list of sentences by lowercasing and splitting by space.
@@ -395,7 +387,7 @@ with st.expander("✨ Understand How It Works", expanded=True):
         """
         Imagine our translator as a team of specialized AI agents working together to understand and speak French. Here's what each part does:
 
-        -   **The Listener (Encoder - Bidirectional LSTM):** This is the part that *listers* carefully to your entire English sentence. It reads each word, not just from left to right, but also from right to left (that's the "Bidirectional" magic!). This helps it build a super rich understanding of every word's meaning in its context, creating a detailed **"thought summary"** of the whole sentence.
+        -   **The Listener (Encoder - Bidirectional LSTM):** This is the part that *listens* carefully to your entire English sentence. It reads each word, not just from left to right, but also from right to left (that's the "Bidirectional" magic!). This helps it build a super rich understanding of every word's meaning in its context, creating a detailed **"thought summary"** of the whole sentence.
 
         -   **The Focuser (Attention Mechanism - Additive Attention):** As our translator starts speaking French, this agent continuously asks, "Which part of the original English sentence should I *focus* on right now to say this next French word?" It's like your eyes scanning a text, highlighting the most important bits. This **dynamic focusing** is key, especially for long sentences, because it ensures the translation stays accurate and relevant, preventing words from getting lost or misunderstood.
 
@@ -473,17 +465,11 @@ with col2:
     )
 
 # --- Translate Button and Output Section ---
-# This section is now outside the columns to span the full width
 st.markdown("<br>", unsafe_allow_html=True) # Add some vertical space before the button
 
 # The single, native Streamlit button
 if st.button("✨ Translate!", key="translate_button_main", use_container_width=True):
     if input_sentence:
-        # Placeholder for output to update dynamically
-        # This placeholder needs to be defined outside the button's if block
-        # but its content updated inside.
-        # For simplicity and direct display, we can just render the output directly
-        # after the button click, which Streamlit handles well.
         with st.spinner("Translating... This might take a moment due to model inference."):
             try:
                 translated_text = predict_translation_cached(
@@ -514,6 +500,7 @@ if st.button("✨ Translate!", key="translate_button_main", use_container_width=
         st.warning("Please select a sentence or enter text to translate before clicking 'Translate!'.")
 
 st.markdown("---")
+
 st.markdown("""
 <div style='text-align: center; margin-top: 30px; font-size: 0.9em; color: #666;'>
     **Developed by an aspiring AI/ML Engineer with a passion for cutting-edge research, aiming for impactful publications and a career at a leading tech company.**
