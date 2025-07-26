@@ -1,6 +1,3 @@
 # .streamlit/config.toml
 [runner]
 python_version = "3.10"
-
-[server]
-folderWatchBlacklist = ["checkpoints/", "dataset/raw/", "dataset/processed/*.txt", "*.ipynb"]
