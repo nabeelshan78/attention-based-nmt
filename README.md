@@ -2,7 +2,7 @@
 
 # English to French Translator
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://attention-based-nmt-4u88ekoanz7pgwfkp4carq.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://attention-based-nmt-rwlnsz6dvpdacpyj4gqob2.streamlit.app/)
 
 This project delivers a real-time Neural Machine Translation (NMT) web application, powered by a custom-built, attention-based encoder-decoder model. Unlike solutions that rely on pre-trained components, our NMT system was designed, implemented, and trained entirely from scratch using TensorFlow on English-French sentence pairs. This end-to-end development showcases a deep, fundamental understanding of NMT principles, from architecture design to training, all deployed seamlessly as a web application with Streamlit.
 
