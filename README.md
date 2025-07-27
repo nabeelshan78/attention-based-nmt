@@ -6,6 +6,7 @@
 
 This project delivers a real-time Neural Machine Translation (NMT) web application, powered by a custom-built, attention-based encoder-decoder model. Unlike solutions that rely on pre-trained components, our NMT system was designed, implemented, and trained entirely from scratch using TensorFlow on English-French sentence pairs. This end-to-end development showcases a deep, fundamental understanding of NMT principles, from architecture design to training, all deployed seamlessly as a web application with Streamlit.
 
+> Total Parameters: 23.638437 million
 
 ## 📚 Table of Contents
 
